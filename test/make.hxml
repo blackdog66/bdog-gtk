@@ -1,4 +1,4 @@
 
 -cp ../
 -neko main.n
--main ui.Test
+-main test.Test

@@ -8,8 +8,8 @@ import gtk.Glade;
 
 class Ui {
   
-  public static function init() {
-    Server.connect();
+  public static function init(port:Int) {
+    Server.connect(port);
     Gtk.init(null,null);
     Glade.init();
   }

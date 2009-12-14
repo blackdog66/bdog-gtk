@@ -8,9 +8,9 @@ class Server {
   static var sock:neko.net.Socket;
   
   public static function
-  connect() {
+  connect(port:Int) {
     sock = new neko.net.Socket();
-    sock.connect(new neko.net.Host("localhost"),50001);
+    sock.connect(new neko.net.Host("localhost"),port);
   }
 
   public static function
