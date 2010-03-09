@@ -1,0 +1,21 @@
+
+# this is an example hxp, note comments are specified with #
+# these are global keys and are all required ...
+
+---
+project:            
+    website:            http://www.ipowerhouse.com
+    description:        A set of wrappers for Gtk-server
+                        that provide a fantastic gui
+                        experience.
+    author:             Ritchie Turner
+    author-email:       woot@woot.com
+    tags:               gui gtk
+    license:            GPL
+    version:            0.6
+    comments:           comments for 0.6
+
+---
+   
+pack:
+        include:        ./
