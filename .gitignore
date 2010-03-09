@@ -1,3 +1,4 @@
 generate/hxGtk.c
 generate/hxGtkKinds.h
 generate/*.o
+.haxed
