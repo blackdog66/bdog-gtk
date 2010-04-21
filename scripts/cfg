@@ -728,14 +728,14 @@ FUNCTION_NAME = pango_layout_set_markup, NONE, NONE, 3, WIDGET, STRING, INT
 #
 # The internal functions (not necessary but sometimes handy for language bindings like newLisp)
 #
-FUNCTION_NAME = gtk_server_callback, NONE, WIDGET, 1, STRING
+FUNCTION_NAME = gtk_server_callback, NONE, STRING, 1, STRING
 FUNCTION_NAME = gtk_server_callback_value, NONE, STRING, 2, STRING, STRING
 FUNCTION_NAME = gtk_server_cfg, NONE, STRING, 1, STRING
 FUNCTION_NAME = gtk_server_connect, NONE, STRING, 3, STRING, STRING, STRING
 FUNCTION_NAME = gtk_server_connect_after, NONE, STRING, 3, STRING, STRING, STRING
 FUNCTION_NAME = gtk_server_define, NONE, STRING, 1, STRING
 FUNCTION_NAME = gtk_server_disable_c_string_escaping, NONE, STRING, 0
-FUNCTION_NAME = gtk_server_disconnect, NONE, STRING, 2, WIDGET,STRING
+FUNCTION_NAME = gtk_server_disconnect, NONE, STRING, 0
 FUNCTION_NAME = gtk_server_echo, NONE, STRING, 1, STRING
 FUNCTION_NAME = gtk_server_enable_c_string_escaping, NONE, STRING, 0
 FUNCTION_NAME = gtk_server_exit, NONE, NONE, 0

@@ -4,16 +4,16 @@
 
 ---
 project:            
-    website:            http://www.ipowerhouse.com
+    website:            http://blackdog66.wordpress.com
     description:        A set of wrappers for Gtk-server
                         that provide a fantastic gui
                         experience.
-    author:             Ritchie Turner
-    author-email:       woot@woot.com
+    author:             blackdog
+    author-email:       blackdog66@gmail.com
     tags:               gui gtk
     license:            GPL
-    version:            0.6
-    comments:           comments for 0.6
+    version:            0.1
+    comments:           new start
 
 ---
    

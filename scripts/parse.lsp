@@ -15,11 +15,11 @@
          (cond
            ((= el "NONE") "Void")
            ((= el "VOID") "Void")
-           ((= el "WIDGET") "Widget")
+           ((= el "WIDGET") "String")
            ((= el "STRING") "String")
            ((= el "INT") "Int")
            ((= el "BOOL") "Bool")
-           ((= el "BASE64") "Bytes")
+           ((= el "BASE64") "String")
            ((= el "NULL") "Widget")
            ((or (= el "DOUBLE") (= el "FLOAT")) "Float")
            ("Dynamic")))
@@ -46,10 +46,8 @@
 (define (body f r p apiType) 
   (letn  ((fncall  (string "Server.send(\"" 
                           (get-prefix apiType) 
-                          f " \"" (body-params p) ")")))
-    (if (= r "Void") 
-        (string fncall ";") 
-        (string "return Server.out" r "(" fncall ");"))))
+                          f " \"" (body-params p) (if (= r "Void") "" ",fn") ")")))
+    (string fncall ";")))
 
 (define (zip) 
     (transpose (args))) 
@@ -64,13 +62,17 @@
 (define (first-char-lower s)
   (string (lower-case (first s)) (1 s)))
  
+(define (comma? s)
+  (if (= (length s) 0) "" ","))
+
 (define (header n r p)
-  (append "public static function "
-          (first-char-lower (cam-case n))
-          "(" (head-params p) ")"
-          ":"
-          r
-          " {\n" ))
+  (letn ((hps (head-params p)))
+    (append "public static function "
+            (first-char-lower (cam-case n))
+            "(" hps (if (= r "Void") ")" (append (comma? hps) "fn:" r  "->Void)"))
+            ":"
+            "Void"
+            " {\n" )))
 
 (define (genApi generator apiType)
   (map (fn (f)  
