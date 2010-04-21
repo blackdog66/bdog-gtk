@@ -1,0 +1,140 @@
+
+Below is my working example, it doesn't actually use the port specfied as I've altered the
+server to run gtk-server as a child process.
+
+-----------------------------------------------------------------------
+
+package test;
+
+import gtk.Model;
+import gtk.Gtk;
+import ui.Ui;
+
+import ui.MessageDialog;
+import ui.Window;
+import ui.Button;
+import ui.Text;
+import ui.Combo;
+import ui.Label;
+
+import js.Node;
+
+import bdog.bingo.Common;
+import bdog.bingo.client.Controller;
+import bdog.extra.Locator;
+
+
+class BClient {
+  
+  public static function
+  main() {
+    Ui.init(50001,start);
+  }
+
+  static var entry1:Text;
+  static var cmbRooms:Combo;
+  static var lblState:Label;
+  static var lblSecs:Label;
+  static var lblNCards:Label;
+  static var window:Window;
+
+  public static function appWindow() {
+    return window;
+  }
+
+  public static function
+  start() {
+    Ui.fromFile("bingo.glade",function(g:GladeXml) {
+        Button.fromGlade(g,"btnCards",function(b) {
+            Ui.event(b,clicked,function(w,e) {
+                room().requestCards();
+              });           
+          });
+        
+        Text.fromGlade(g,"entry1",function(t:Text) {
+            entry1 = t;
+            entry1.set("woot");
+          });
+
+        Button.fromGlade(g,"btnSLogin",function(b) {
+            
+            Ui.event(b,clicked,function(w,e) {
+                sLogin();
+              });
+          });
+
+        Label.fromGlade(g,"lblSecs",function(l) {
+            lblSecs = l;
+          });
+
+        Label.fromGlade(g,"lblState",function(l) {
+            lblState = l;
+          });
+        
+        Label.fromGlade(g,"lblNCards",function(l) {
+            lblNCards = l;
+          });
+        
+        Combo.fromGlade(g,"cmbRooms",function(c:Combo) {
+            cmbRooms = c;
+            Ui.event(cmbRooms,changed,function(w,e) {
+                trace("room changed "+w+" with event "+e);
+              });           
+          });
+        
+        Window.fromGlade(g,"window1",function(w) {
+            window = w;
+            window.title("bingo");
+            Ui.event(window,destroy, function(w,e) { Gtk.mainQuit();
+                Node.process.exit(0);
+              });
+            Ui.poll(window);
+            pLogin();
+          });        
+      });
+  }
+
+
+  static function
+  pLogin() {
+    var l:Location = {host:'localhost',port:8084};
+    Controller.login(l,'t1@t1.com','pass','site',function(err,u) {
+        entry1.set(u.sessID);
+      });
+  }
+
+  public static function room() {
+    return Controller.getRoom();
+  }
+  
+  static function
+  sLogin() {
+    cmbRooms.selected(function(roomID) {
+        trace("roomID = "+roomID);
+        if (roomID == "") {
+          MessageDialog.info("Select a room first",appWindow());
+          return;
+        }
+        Controller.roomLogin(Controller.sessID,roomID,function(room) {
+        
+            room.event.onLogin.addHandler(function(login) {
+                
+              });
+            
+            room.event.onGame.addHandler(function(g) {                
+                
+              });
+            
+            room.event.onCards.addHandler(function(c) {
+                lblNCards.label(Std.string(c.cards.length));
+              });
+            
+            room.event.onSync.addHandler(function(s:SyncPkt) {
+                lblState.label(s.event);
+                lblSecs.label(Std.string(s.curSec));
+              });
+          });
+      });
+  }
+}
+
