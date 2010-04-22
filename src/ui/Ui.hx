@@ -55,7 +55,6 @@ class Ui {
                 var 
                   id = Std.parseInt(event),
                   obj = pending.get(id);
-                trace("event "+id +" "+obj);
                 if (obj != null) {
                   try {
                     obj.fn(obj.w,obj.e);

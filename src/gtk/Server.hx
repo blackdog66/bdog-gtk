@@ -88,7 +88,7 @@ class Server {
 #elseif nodejs
 
     if (fn == null)
-      fn = function(d) { trace("default"); }
+      fn = function(d) {  }
       
     handlers.push({cmd:o,fn:fn});
 
@@ -152,7 +152,7 @@ class Server {
   public static function
   inWidget(w:Widget):String {
     if (w == null)
-      return "null";
+      return "NULL";
     return w.toString();
   }
   

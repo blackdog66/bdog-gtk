@@ -357,6 +357,9 @@ Server.send("gtk_text_view_get_pixels_above_lines "+Server.inString(p1),fn);
 public static function textViewSetCursorVisible(p1:String,p2:Bool):Void {
 Server.send("gtk_text_view_set_cursor_visible "+Server.inString(p1) + " "+Server.inBool(p2));
 }
+public static function textViewSetBuffer(p1:String,p2:String):Void {
+Server.send("gtk_text_view_set_buffer "+Server.inString(p1) + " "+Server.inString(p2));
+}
 public static function textViewWindowToBufferCoords(p1:String,p2:Int,p3:Int,p4:Int,p5:String,p6:String):Void {
 Server.send("gtk_text_view_window_to_buffer_coords "+Server.inString(p1) + " "+Server.inInt(p2) + " "+Server.inInt(p3) + " "+Server.inInt(p4) + " "+Server.inString(p5) + " "+Server.inString(p6));
 }

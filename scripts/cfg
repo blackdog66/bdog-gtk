@@ -255,6 +255,8 @@ FUNCTION_NAME = gtk_text_view_get_pixels_inside_wrap, NONE, INT, 1, WIDGET
 FUNCTION_NAME = gtk_text_view_set_pixels_above_lines, NONE, NONE, 2, WIDGET, INT
 FUNCTION_NAME = gtk_text_view_get_pixels_above_lines, NONE, INT, 1, WIDGET
 FUNCTION_NAME = gtk_text_view_set_cursor_visible, NONE, NONE, 2, WIDGET, BOOL
+FUNCTION_NAME = gtk_text_view_set_buffer, NONE, NONE, 2, WIDGET, STRING
+
 FUNCTION_NAME = gtk_text_view_window_to_buffer_coords, NONE, NONE, 6, WIDGET, INT, INT, INT, WIDGET, WIDGET
 FUNCTION_NAME = gtk_text_iter_forward_search, NONE, BOOL, 6, WIDGET, STRING, INT, WIDGET, WIDGET, NULL
 FUNCTION_NAME = gtk_text_iter_forward_visible_cursor_position, NONE, BOOL, 1, WIDGET
