@@ -1,6 +1,8 @@
 
 package gtk;
 
+import ui.Widget;
+
 enum Event {
   clicked;
   enter;
@@ -10,19 +12,6 @@ enum Event {
   destroy;
 }
 
-class Widget {
-
-  var id:String;
-  
-  public function new(id:String) {
-    this.id = id;
-  }
-
-  public function toString() {
-    return id;
-  }
-
-}
 
 class GladeXml extends Widget {}
 

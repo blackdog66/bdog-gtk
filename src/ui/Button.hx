@@ -21,5 +21,8 @@ class Button extends Widget {
   public function label(s:String) {
     Gtk.buttonSetLabel(id,s);
   }
-  
+
+  public function onClick(fn:CallBack) {
+      Ui.event(this,clicked,fn);
+  }
 }

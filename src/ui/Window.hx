@@ -22,5 +22,8 @@ class Window extends Widget {
   public function title(s:String) {
     Gtk.windowSetTitle(id,s);
   }
-  
+
+  public function onDestroy(fn:CallBack) {
+    Ui.event(this,destroy,fn);
+  }
 }

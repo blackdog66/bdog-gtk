@@ -27,4 +27,8 @@ class Combo extends Widget {
   selected(fn:String->Void) {
     Gtk.comboBoxGetActiveText(id,fn);
   }
+
+  public function onChange(fn:CallBack) {
+    Ui.event(this,changed,fn);
+  }
 }

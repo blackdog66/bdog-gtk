@@ -1,6 +1,7 @@
 package gtk;
 
 import gtk.Model;
+import ui.Widget;
 
 #if neko
 import haxe.io.Bytes;

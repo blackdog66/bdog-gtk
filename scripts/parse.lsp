@@ -96,7 +96,7 @@
    "
 package gtk;
 
-import gtk.Model;
+import ui.Widget;
 import gtk.Server; 
 import haxe.io.Bytes;
 
