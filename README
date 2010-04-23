@@ -4,6 +4,7 @@ server to run gtk-server as a child process.
 
 -----------------------------------------------------------------------
 
+
 package test;
 
 import gtk.Model;
@@ -16,6 +17,8 @@ import ui.Button;
 import ui.Text;
 import ui.Combo;
 import ui.Label;
+import ui.TextView;
+import ui.TextBuffer;
 
 import js.Node;
 
@@ -36,7 +39,11 @@ class BClient {
   static var lblState:Label;
   static var lblSecs:Label;
   static var lblNCards:Label;
+  static var lblStatus:Label;
   static var window:Window;
+  static var wndCards:Window;
+  static var viewRaw:TextView;
+  static var textBuffer:TextBuffer;
 
   public static function appWindow() {
     return window;
@@ -46,7 +53,7 @@ class BClient {
   start() {
     Ui.fromFile("bingo.glade",function(g:GladeXml) {
         Button.fromGlade(g,"btnCards",function(b) {
-            Ui.event(b,clicked,function(w,e) {
+            b.onClick(function(w,e) {
                 room().requestCards();
               });           
           });
@@ -56,9 +63,8 @@ class BClient {
             entry1.set("woot");
           });
 
-        Button.fromGlade(g,"btnSLogin",function(b) {
-            
-            Ui.event(b,clicked,function(w,e) {
+        Button.fromGlade(g,"btnSLogin",function(b) {            
+            b.onClick(function(w,e) {
                 sLogin();
               });
           });
@@ -74,23 +80,50 @@ class BClient {
         Label.fromGlade(g,"lblNCards",function(l) {
             lblNCards = l;
           });
+
+        Label.fromGlade(g,"lblStatus",function(l) {
+            lblStatus = l;
+          });
         
         Combo.fromGlade(g,"cmbRooms",function(c:Combo) {
             cmbRooms = c;
-            Ui.event(cmbRooms,changed,function(w,e) {
+            cmbRooms.onChange(function(w,e) {
                 trace("room changed "+w+" with event "+e);
               });           
+          });
+
+        TextView.fromGlade(g,"viewRaw",function(tv:TextView) {
+            viewRaw = tv;
+            tv.getBuffer(function(tb){
+                textBuffer = tb;
+                textBuffer.setText("woot");
+              });
           });
         
         Window.fromGlade(g,"window1",function(w) {
             window = w;
             window.title("bingo");
-            Ui.event(window,destroy, function(w,e) { Gtk.mainQuit();
+            window.onDestroy(function(w,e) {
+                Gtk.mainQuit();
                 Node.process.exit(0);
               });
             Ui.poll(window);
             pLogin();
-          });        
+          });
+
+        Window.fromGlade(g,"wndCards",function(w) {
+            wndCards = w;
+            wndCards.onDestroy(function(w,e) {
+                wndCards.hide();
+              });
+            
+            Button.fromGlade(g,"btnShowCards",function(b) {
+                b.onClick(function(w,e) {
+                    wndCards.show();
+                  });
+              });
+          });
+        
       });
   }
 
@@ -133,8 +166,17 @@ class BClient {
                 lblState.label(s.event);
                 lblSecs.label(Std.string(s.curSec));
               });
+
+            room.event.onDebug.addHandler(function(d:Dynamic) {
+                trace("displaying raw ");
+                textBuffer.setText(Std.string(d));
+                
+              });
+
+            room.event.onCannotBuy.addHandler(function() {
+                lblStatus.label("you cannot buy right now");
+              });
           });
       });
   }
 }
-
